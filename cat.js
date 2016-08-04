@@ -61,19 +61,16 @@ exports.create = function(catObj, callback) {
 }
 
 exports.update = (catObj, id, callback) =>{
-  exports.getAll((err, cats) => {
+  this.getAll((err, cats) => {
     if(err) return callback(err);
     catObj.id === id;
     cats = cats(catObj => catObj.id != id);
     let newCat = {
       name: name,
       type: type,
-      id:id
+      id:    id
     }
-    cats.push(cat);
-     fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){//stringify
-      callback(err);
-    });
+    cats.push(newCat);
   })
 }
 
