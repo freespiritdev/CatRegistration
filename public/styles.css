@@ -1,0 +1,44 @@
+body{
+  background-color: #333;
+  color: #fff;
+}
+
+.jumbotron{
+ 
+}
+
+input{
+  background-color: #000;
+  color: #fff;
+  width: 50%;
+  text-align: center;
+
+}
+
+h1.title{
+  text-align: center;
+}
+
+
+.form-control{
+
+} 
+
+.btn-default{
+  color: #fff;
+  background-color: #000;
+}
+
+.delete{
+  color: #fff;
+  background-color: #ff0000;
+}
+
+ul{
+  list-style-type: none;
+}
+
+
+#template{
+  display: none;
+}
