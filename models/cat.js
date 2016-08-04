@@ -61,7 +61,7 @@ exports.create = function(catObj, callback) {
 }
 
 exports.update = (catObj, id, callback) =>{
-  this.getAll((err, cats) => {
+  exports.getAll((err, cats) => {
     if(err) return callback(err);
     catObj.id === id;
     cats = cats(catObj => catObj.id != id);
@@ -70,7 +70,10 @@ exports.update = (catObj, id, callback) =>{
       type: type,
       id:id
     }
-    cats.push(newCat);
+    cats.push(cat);
+    fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){//stringify
+      callback(err);
+    });
   })
 }
 

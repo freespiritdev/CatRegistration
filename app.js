@@ -68,19 +68,24 @@ app.route('/cats/:id')
 })
   .put((req, res) => {
     Cat.update(req.body, req.params.id, err =>{
+       // cat.name = req.body.name;
+      // cat.type = req.body.type;
+      // cat.color = req.body.color;
       if(err) return res.status(400).send(err);
     })
     //PUT /cats/5  - update one cats
-    res.send(`Editing cat #${req.params.id}!`);
+    // res.send(`Editing cat #${req.params.id}!`);
+    res.send();
    
 })
   .delete((req, res) => {
     //DELETE /cats/5  - delete one cats
     // res.send(`Deleting cat #${req.params.id}!`);
-    Cat.delete(req.body, err =>{
+    Cat.delete(req.body.id, err =>{
       if(err) return res.status(400).send(err);
     })
-    res.send("Cat Deleted");
+    res.send();
+    // res.redirect("/");
 });
 
 //Timestamp Route
