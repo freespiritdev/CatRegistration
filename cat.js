@@ -60,26 +60,39 @@ exports.create = function(catObj, callback) {
   });
 }
 
-exports.update = (catObj, id, callback) =>{
-  this.getAll((err, cats) => {
-    if(err) return callback(err);
-    catObj.id === id;
-    cats = cats(catObj => catObj.id != id);
-    let newCat = {
-      name: name,
-      type: type,
-      id:    id
-    }
-    cats.push(newCat);
-  })
-}
 
-//received ok from postman for delete
-exports.delete = (id, callback) =>{
-  this.getAll((err, cats)=>{
+//fix this
+exports.update = (id, updateObj, callback) =>{
+  exports.getAll(function(err, cats) {
     if(err) return callback(err);
-     fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){
-          callback(err);
-        })
-  });
-}
+
+    let cat = cats.filter(cat => cat.id === id)[0];
+
+    if(!cat) { //if cat isn't found
+      return callback({error: "Cat not found."});
+    }
+
+    let index = cats.indexOf(cat);
+
+    for(let key in updateObj) {  //for in loop allows you to iterate over keys in objects
+      cat[key] = updateObj[key]; //allows you to change this object
+    }  
+
+    cats[index] = cat;
+
+    fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){//stringify
+      if(err) return callback(err);
+      
+      callback(null, cat);
+    });
+
+// //received ok from postman for delete
+// exports.delete = (id, callback) =>{
+//   this.getAll((err, cats)=>{
+//     if(err) return callback(err);
+//      fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){
+//           callback(err);
+//         })
+//   });
+// }
+

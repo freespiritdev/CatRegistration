@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+  meta(charset="UTF-8")
+  link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+  script(src='https://code.jquery.com/jquery-3.1.0.js', integrity='sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=', crossorigin='anonymous')
+  script(src="main.js")
+  title= title
+body
+  .container
+    .row
+      .col-xs-12
+        h1 #{title}
+        h2 Cat Registration!
+      
+    .row
+      .col-xs-12
+      if cats.length
+        table.table
+          thead
+              tbody
+                tr
+                  th Name
+                  th Type
+                  th Color
+                  th ID
+                  th Delete
+          tbody#catlist     
+            each cat in cats
+              tr(data-id= cat.id)
+                td= cat.name 
+                td #{cat.type}
+                td #{cat.color}
+                td #{cat.id}
+                td
+                  button.btn.btn-danger.bt-xs.delete X
+
+
+table.hidden
+  tr#template
+    td.name
+    td.type
+    td.color
+    td
+      button.btn.btn-danger.bt-xs.delete X
+
+
+
+      //make it a table, if there aren't any cats don't put a table, place for the ids data attributes for each row
+      //td= cat.name and #{cat.name} are equivalent

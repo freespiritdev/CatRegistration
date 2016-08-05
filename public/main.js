@@ -1,54 +1,48 @@
 'use strict'
 
-$(() => {
+console.log("Hey!");
 
-  let cats = catsFromStorage();
-  let $lis = cats.map(cat => createLi(cat));
+
+$(() => {
+  $('table').on('click', '.delete', deleteCat);
 
 });
 
+function deleteCat(){
+  console.log("Deleted!");
 
-function createLi(cat){
-  let $li = $('#template').clone();
-  $li.removeAttr('id');
-  $li.children('.cat').text(cat);
-  return $li;
+  let catId = $(this).closest('tr').data('id'); //closest ancestor that matched the tr
+  // console.log('catId:', catId);
+
+  $.ajax(`/cats/${catId}`, {//api call
+    method: 'DELETE'
+  }) 
+  .done(() => {
+     console.log("Success!");
+      renderList();                      //Update the DOM hy rendering it
+     // $(this).closest('tr').remove() //update the DOM
+
+     //update DOM
+  })
+  .fail(err => {
+     console.log('err:', err);
+  });
 }
 
-function addCat(e){
-  e.preventDefault();
+function renderList() {
+  $.get('/cats')
+  .done(cats => {
+  
+    let $trs = cats.map(cat =>{
+      let $tr = $('template').clone();
+      $tr.removeAttr('id');
+      $tr.find('.name').text(cat.name);
+      $tr.find('.type').text(cat.type);
+      $tr.find('.color').text(cat.color);
+      $tr.data('id', cat.id);
+      return $tr;
+    })
+    $('#catList').empty().append($trs);
 
-  let name = $('#name').val();
-  let type = $('#type').val();
-  let color = $('#color').val();
-
-  let cat = $('#name').val() + " " + $('#type').val() + " " + $('#color').val();
-
-  $('#name').val('');
-  $('#type').val('');
-  $('#color').val('');
-
-  let $li = createLi(cat);
-  $('#cat').append($li);
-  addToStorage(cat);
-}
-
-function addToStorage(cat){
-  let cats = catsFromStorage();
-
-  cas.push(cat);
-
-  writeToStorage(cats);
-}
-
-function catsFromStorage(){
-  let json = localStorage.cats;
-  let cats;
-
-  try{
-    cats = JSON.parse(json);
-  }catch(event){
-    cats = [];
-  }
-  return cats;  
+  });
 }
